@@ -72,9 +72,9 @@ else
 		O: <input type="radio" name="sex" value="O" <?= (isset($usuario[6])&&$usuario[6]=='O')?'checked':'';?> />
 		</li>
 		<li>Ciudad: <select name="city">
-					<option value="vigo">Vigo</option>
-					<option value="bcn">Barcelona</option>
-					<option value="bilbao">Bilbao</option>
+					<option value="vigo" <?= (isset($usuario[7])&&$usuario[7]=='vigo')?'selected':'';?>>Vigo</option>
+					<option value="bcn" <?= (isset($usuario[7])&&$usuario[7]=='bcn')?'selected':'';?>>Barcelona</option>
+					<option value="bilbao" <?= (isset($usuario[7])&&$usuario[7]=='bilbao')?'selected':'';?>>Bilbao</option>
 					</select></li>
 		<li>Foto: <input type="file" name="photo"/>
 		<?php 
