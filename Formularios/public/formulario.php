@@ -17,11 +17,15 @@ $datos=file_get_contents($userFilename);
 // Pasar datos a un array
 $arrayDatos=explode("\r",$datos);
 
-// Leer posicion id del array
-$usuario=$arrayDatos[$_GET['id']];
 
-//Convertir en array
-$usuario=explode("|",$usuario);
+if(isset($_GET['id']))
+{
+	// Leer posicion id del array
+	$usuario=$arrayDatos[$_GET['id']];
+
+	//Convertir en array
+	$usuario=explode("|",$usuario);
+}
 
 // echo "<pre>";
 // print_r($usuario);
@@ -58,14 +62,14 @@ else
 
 	<ul>
 		<li>Id: <input type="hidden" name="id" value="<?= (isset($_GET['id']))?$_GET['id']:'1';?>"/></li>
-		<li>Name: <input type="text" name="name" value="<?= ($usuario[1]!='')?$usuario[1]:'';?>" /></li>
-		<li>Email: <input type="text" name="email" value="<?= ($usuario[2]!='')?$usuario[2]:'';?>" /></li>
+		<li>Name: <input type="text" name="name" value="<?= (isset($usuario[1])&&$usuario[1]!='')?$usuario[1]:'';?>" /></li>
+		<li>Email: <input type="text" name="email" value="<?= (isset($usuario[2])&&$usuario[2]!='')?$usuario[2]:'';?>" /></li>
 		<li>Password: <input type="password" name="password"/></li>
-		<li>Dirección: <input type="text" name="address" value="<?= ($usuario[4]!='')?$usuario[4]:'';?>"/></li>
-		<li>Descripción: <textarea rows="10" cols="10" name="description"><?= ($usuario[5]!='')?$usuario[5]:'';?></textarea></li>
-		<li>Sexo: M: <input type="radio" name="sex" value="M" <?= ($usuario[6]=='M')?'checked':'';?> /> 
-		H: <input type="radio" name="sex" value="H" <?= ($usuario[6]=='H')?'checked':'';?> />
-		O: <input type="radio" name="sex" value="O" <?= ($usuario[6]=='O')?'checked':'';?> />
+		<li>Dirección: <input type="text" name="address" value="<?= (isset($usuario[4])&&$usuario[4]!='')?$usuario[4]:'';?>"/></li>
+		<li>Descripción: <textarea rows="10" cols="10" name="description"><?= (isset($usuario[5])&&$usuario[5]!='')?$usuario[5]:'';?></textarea></li>
+		<li>Sexo: M: <input type="radio" name="sex" value="M" <?= (isset($usuario[6])&&$usuario[6]=='M')?'checked':'';?> /> 
+		H: <input type="radio" name="sex" value="H" <?= (isset($usuario[6])&&$usuario[6]=='H')?'checked':'';?> />
+		O: <input type="radio" name="sex" value="O" <?= (isset($usuario[6])&&$usuario[6]=='O')?'checked':'';?> />
 		</li>
 		<li>Ciudad: <select name="city">
 					<option value="vigo">Vigo</option>
@@ -73,7 +77,14 @@ else
 					<option value="bilbao">Bilbao</option>
 					</select></li>
 		<li>Foto: <input type="file" name="photo"/>
-		<img src="<?="/uploads/".$usuario[11];?>" width=100px />
+		<?php 
+		if(isset($usuario[11]))
+		{
+		?>
+			<img src="<?="/uploads/".$usuario[11];?>" width=100px />
+		<?php 
+		}
+		?>
 		</li>
 		<li>Mascotas: Tigre: <input type="checkbox" name="pets[]" value="tiger" <?= (in_array('tiger',$pets))?'checked':'';?>/>
 		Tarantula: <input type="checkbox" name="pets[]" value="spider" <?= (in_array('spider',$pets))?'checked':'';?>/>
