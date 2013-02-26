@@ -45,12 +45,6 @@ $file = "usuarios.txt";
 $content=file_get_contents($file);
 $arrayFile=explode("\r",$content);
 
-// echo "<pre>";
-// print_r($arrayFile[0]);
-// echo "</pre>";
-
-
-// die ("hasta aqui");
 
 echo "
 	<a href=\"formulario.php\">Add</a>
@@ -86,7 +80,7 @@ foreach($arrayFile as $key => $line)
 		}
 	echo "<td><a href=\"formulario.php?id=".$key."\">update</a>
 				&nbsp;
-			  <a href=\"#\">delete</a>
+			  <a href=\"confirmar_borrar.php?id=".$key."\">delete</a>
 		  </td>";		
 	echo "</tr>";
 }
