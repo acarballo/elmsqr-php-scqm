@@ -15,52 +15,51 @@ else
 // Read config
 $config=parse_ini_file('../application/configs/config.ini',true);
 $userFilename=$config['production']['userFilename'];
+$uploadDir=$config['production']['uploadDirectory'];
 
 // Include Models
+include_once('../application/models/functions.php');
 include_once('../application/models/filesFunctions.php');
+include_once('../application/models/users/usersFunctions.php');
 
 
 switch ($action)
 {
 	case 'insert':
-		include_once('usersForm.php');
+		include_once('../application/views/forms/user.php');
 	break;
 	
 	case 'update':
-		// Leer datos del archivo de usuarios
-		$datos=file_get_contents($userFilename);		
-		// Pasar datos a un array
-		$arrayDatos=explode("\r",$datos);		
-		
-		if(isset($_GET['id']))
+		if($_POST)
 		{
-			// Leer posicion id del array
-			$usuario=$arrayDatos[$_GET['id']];
-		
-			//Convertir en array
-			$usuario=explode("|",$usuario);
+			$dataArray=readDataFromFile($userFilename);
+			$user=$dataArray[$_GET['id']];					
+			$name=updatePhoto($user[11], $uploadDir);			
+			$_POST[]=$name;
+			$dataArray[$_POST['id']]=$_POST;			
+			writeDataToFile($userFilename, $dataArray, TRUE);			
+			header('Location: /users.php');
+			exit;
 		}
-	
-		if(!empty($usuario[8]))
-			$pets=explode(',',$usuario[8]);
-		else
-			$pets=array();
-		
-		if(!empty($usuario[9]))
-			$sports=explode(',',$usuario[9]);
-		else
-			$sports=array();
-		
-		include_once('usersForm.php');
+		else 
+		{
+			$dataArray=readDataFromFile($userFilename);
+			$usuario=$dataArray[$_GET['id']];		
+			$pets=commaToArray($usuario[8]);
+			$sports=commaToArray($usuario[9]);		
+			include_once('../application/views/forms/user.php');
+		}
 	break;
 	
-	case 'delete':
-		echo "Esto delete";
+	case 'delete':;
+		$dataArray=readDataFromFile($userFilename);
+		$usuario=$dataArray[$_GET['id']];
+		include_once('../application/views/users/delete.php');
 	break;
 		
 	case 'select':
 		$arrayLine=readDataFromFile($userFilename);
-		include_once ('usersSelect.php');
+		include_once ('../application/views/users/select.php');
 	break;	
 	
 	default:

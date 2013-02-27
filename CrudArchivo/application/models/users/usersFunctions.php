@@ -1,20 +1,32 @@
 <?php
 
-function readPets($stringPets)
+/**
+ * Update users photo
+ * @param string $lastImage
+ * @param string $uploadDir
+ * @return string $name
+ */
+function updatePhoto($lastImage, $uploadDir)
 {
-	if(!empty($usuario[8]))
-		$pets=explode(',',$usuario[8]);
-	else
-		$pets=array();
+	// Sobreescibir imagen si hay nueva
+	if(isset($_FILES["photo"]["tmp_name"]) && 
+			 $_FILES["photo"]["tmp_name"]!='')
+	{
+		$tmp_name = $_FILES["photo"]["tmp_name"];
+		$name = $_FILES["photo"]["name"];
+		$ruta = $_SERVER['DOCUMENT_ROOT'].$uploadDir;
+		$url = $uploadDir;
+		$name=SubirArchivo($_FILES);
 	
-	return $pets;
-}
-
-
-function readSports()
-{
-	if(!empty($usuario[9]))
-		$sports=explode(',',$usuario[9]);
+		// Borrar imagen anterior
+		unlink($ruta."/".$lastImage);
+	}
 	else
-		$sports=array();
+	{
+		// Usar imagen anterior
+		$name=$lastImage;
+	}
+	
+	return $name;
 }
+
