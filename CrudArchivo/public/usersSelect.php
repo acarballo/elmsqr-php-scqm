@@ -15,30 +15,16 @@
 		<th>photo</th>
 		<th>options</th>
 	</tr>
-<?php 
-
-// Configuracion
-$file = "usuarios.txt";
-
-// Leer el fichero de datos
-$content=file_get_contents($file);
-$arrayFile=explode("\r",$content);
-
-// Mostrar en la tabla
-// Recorrer para cada linea
-foreach($arrayFile as $key => $line): ?>
+<?php foreach($arrayLine as $key => $line): ?>
 	<tr>
-	<?php 
-		$arrayLine = explode('|', $line);
-		// Recorrer para cada elemento	
-		foreach($arrayLine as $key1 => $value):?>
+		<?php foreach($line as $key1 => $value):?>
 			<td><?=$value;?></td>
 		<?php endforeach;?>
-	<td>
-		<a href="formulario.php?id=<?=$key;?>">update</a>
-			&nbsp;
-		<a href="confirmar_borrar.php?id=<?=$key;?>">delete</a>
-	</td>		
+		<td>
+			<a href="users.php?action=update&id=<?=$key;?>">update</a>
+				&nbsp;
+			<a href="confirmar_borrar.php?id=<?=$key;?>">delete</a>
+		</td>		
 	</tr>
 <?php endforeach; ?>
 </table>
