@@ -33,9 +33,7 @@ switch ($action)
 	case 'insert':
 		if($_POST)
 		{						
-			$name=insertPhoto($uploadDir);
-			$_POST[]=$name;			
-			writeDataToFile ($userFilename, $_POST);			
+			$id=insertUser($config, $_POST);
 			header('Location: /users.php');
 			exit;
 		}
@@ -48,19 +46,13 @@ switch ($action)
 	case 'update':
 		if($_POST)
 		{
-			$user=readUser($id, $config);
-			$name=updatePhoto($user[11], $uploadDir);			
-			$_POST[]=$name;
-			$dataArray[$_POST['id']]=$_POST;			
-			writeDataToFile($userFilename, $dataArray, TRUE);			
+			updateUser($_GET['id'], $config);			
 			header('Location: /users.php');
 			exit;
 		}
 		else 
 		{
-			$user=readUser($_GET['id'], $config);
-			$pets=commaToArray($user[8]);
-			$sports=commaToArray($user[9]);		
+			$user=readUser($_GET['id'], $config, $_POST);
 			include_once('../application/views/forms/user.php');
 		}
 	break;
@@ -69,12 +61,7 @@ switch ($action)
 		if($_POST)
 		{
 			if($_POST['submit']=='Si')
-			{		
-				$user=readUser($id, $config);
-				deleteFile($user[11], $uploadDir);			
-				unset($dataArray[$_POST['id']]);
-				writeDataToFile($userFilename, $dataArray, TRUE);
-			}
+				deleteUser($_GET['id'],$config);
 			header('Location: /users.php');
 			exit;
 		}
@@ -92,7 +79,6 @@ switch ($action)
 	
 	default:
 		echo "Esto default";
-	break;
-	
+	break;	
 }
 

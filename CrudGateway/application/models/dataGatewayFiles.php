@@ -64,5 +64,44 @@ function deleteUser($id,$config)
 	return;
 }
 
+/**
+ * Update id user 
+ * @param int $id
+ * @param array $config
+ * @param array $data
+ */
+function updateUser($id,$config, $data)
+{
+	$uploadDir=$config['production']['uploadDirectory'];
+	$userFilename=$config['production']['userFilename'];
+	
+	$user=readUser($id, $config);
+	$name=updatePhoto($user[11], $uploadDir);
+	$data[]=$name;
+	$dataArray[$data['id']]=$data;
+	writeDataToFile($userFilename, $dataArray, TRUE);
+	
+	return;
+}
+
+/**
+ * Insert user into file
+ * @param array $config
+ * @param array $data
+ * @return int $id
+ */
+function insertUser($config, $data)
+{
+	$uploadDir=$config['production']['uploadDirectory'];
+	$userFilename=$config['production']['userFilename'];
+	
+	$name=insertPhoto($uploadDir);
+	$data[]=$name;
+	$id=writeDataToFile ($userFilename, $data);
+	
+	return $id;
+}
+
+
 
 

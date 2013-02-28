@@ -30,3 +30,13 @@ function deleteUser($id)
 	
 	return TRUE|FALSE;
 }
+
+function readPets()
+{
+	return $array;
+}
+
+function readSports()
+{
+	return $array;
+}
