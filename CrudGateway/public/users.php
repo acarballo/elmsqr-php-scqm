@@ -14,13 +14,18 @@ else
 
 // Read config
 $config=parse_ini_file('../application/configs/config.ini',true);
-$userFilename=$config['production']['userFilename'];
-$uploadDir=$config['production']['uploadDirectory'];
+
+
+
+// Include Gateways
+include_once('../application/models/dataGatewayFiles.php');
 
 // Include Models
 include_once('../application/models/files/functions.php');
 include_once('../application/models/files/filesFunctions.php');
 include_once('../application/models/users/usersFunctions.php');
+
+
 
 
 switch ($action)
@@ -43,8 +48,7 @@ switch ($action)
 	case 'update':
 		if($_POST)
 		{
-			$dataArray=readDataFromFile($userFilename);
-			$user=$dataArray[$_GET['id']];					
+			$user=readUser($id, $config);
 			$name=updatePhoto($user[11], $uploadDir);			
 			$_POST[]=$name;
 			$dataArray[$_POST['id']]=$_POST;			
@@ -54,10 +58,9 @@ switch ($action)
 		}
 		else 
 		{
-			$dataArray=readDataFromFile($userFilename);
-			$usuario=$dataArray[$_GET['id']];		
-			$pets=commaToArray($usuario[8]);
-			$sports=commaToArray($usuario[9]);		
+			$user=readUser($_GET['id'], $config);
+			$pets=commaToArray($user[8]);
+			$sports=commaToArray($user[9]);		
 			include_once('../application/views/forms/user.php');
 		}
 	break;
@@ -67,8 +70,7 @@ switch ($action)
 		{
 			if($_POST['submit']=='Si')
 			{		
-				$dataArray=readDataFromFile($userFilename);
-				$user=$dataArray[$_POST['id']];
+				$user=readUser($id, $config);
 				deleteFile($user[11], $uploadDir);			
 				unset($dataArray[$_POST['id']]);
 				writeDataToFile($userFilename, $dataArray, TRUE);
@@ -78,14 +80,13 @@ switch ($action)
 		}
 		else 
 		{
-			$dataArray=readDataFromFile($userFilename);
-			$usuario=$dataArray[$_GET['id']];
+			$user=readUser($_GET['id'], $config);
 			include_once('../application/views/users/delete.php');
 		}
 	break;
 		
 	case 'select':
-		$arrayLine=readDataFromFile($userFilename);
+		$users=readUsers($config);
 		include_once ('../application/views/users/select.php');
 	break;	
 	

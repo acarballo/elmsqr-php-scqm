@@ -1,28 +1,68 @@
 <?php
 
 
-function readUsers()
-{
 
-	return $array|FALSE;
+/**
+ * Read users from file
+ * @param array $config
+ * @throws Exception
+ * @return array: $users | FALSE
+ */
+function readUsers($config)
+{
+	$userFilename=$config['production']['userFilename'];
+	try 
+	{
+		if (!file_exists($userFilename)) {
+			throw new Exception('Imposible Leer Usuarios.');
+		}
+		$users=readDataFromFile($userFilename);
+		
+		return $users;
+	} 
+	catch (Exception $e) 
+	{
+		echo 'Ha ocurrido el siguiente error: ',  $e->getMessage(), "\n";
+		return FALSE;
+	}	
 }
 
-function readUser($id)
+
+/**
+ * Read id user from file 
+ * @param int $id
+ * @param array $config
+ * @return array $user
+ */
+function readUser($id, $config)
 {
-
-	return $array|FALSE;
-}
-
-
-function saveUser($id=NULL)
-{
+	$userFilename=$config['production']['userFilename'];
 	
-	return $id|FALSE;
-}
-
-
-function deleteUser($id)
-{
+	$dataArray=readDataFromFile($userFilename);
+	$user=$dataArray[$id];
 	
-	return TRUE|FALSE;
+	return $user;
 }
+
+/**
+ * Delete user from file
+ * @param int $id
+ * @param array $config
+ * @return void;
+ */
+function deleteUser($id,$config)
+{
+	$uploadDir=$config['production']['uploadDirectory'];
+	$userFilename=$config['production']['userFilename'];
+	
+	$user=readUser($id, $config);
+	$users=readUsers($config);
+	deleteFile($user[11], $uploadDir);
+	unset($users[$_POST['id']]);
+	writeDataToFile($userFilename, $users, TRUE);
+	
+	return;
+}
+
+
+

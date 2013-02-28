@@ -15,7 +15,7 @@
 		<th>photo</th>
 		<th>options</th>
 	</tr>
-<?php foreach($arrayLine as $key => $line): ?>
+<?php foreach($users as $key => $line): ?>
 	<tr>
 		<?php foreach($line as $key1 => $value):?>
 			<td><?=$value;?></td>
