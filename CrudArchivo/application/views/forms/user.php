@@ -33,14 +33,14 @@
 			<img src="<?="/uploads/".$usuario[11];?>" width=100px />
 		<?php endif; ?>
 		</li>
-		<li>Mascotas: Tigre: <input type="checkbox" name="pets[]" value="tiger" <?= (in_array('tiger',$pets))?'checked':'';?>/>
-		Tarantula: <input type="checkbox" name="pets[]" value="spider" <?= (in_array('spider',$pets))?'checked':'';?>/>
-		Iguana: <input type="checkbox" name="pets[]" value="iguana" <?= (in_array('iguana',$pets))?'checked':'';?>/>
+		<li>Mascotas: Tigre: <input type="checkbox" name="pets[]" value="tiger" <?= (isset($pets)&&in_array('tiger',$pets))?'checked':'';?>/>
+		Tarantula: <input type="checkbox" name="pets[]" value="spider" <?= (isset($pets)&&in_array('spider',$pets))?'checked':'';?>/>
+		Iguana: <input type="checkbox" name="pets[]" value="iguana" <?= (isset($pets)&&in_array('iguana',$pets))?'checked':'';?>/>
 		</li>
 		<li>Deportes: <select multiple name="sports[]">
-					<option value="futbol" <?= (in_array('futbol',$sports))?'selected':'';?> >Futbol</option>
-					<option value="beisbol" <?= (in_array('beisbol',$sports))?'selected':'';?>>Besisbol</option>
-					<option value="natacion" <?= (in_array('natacion',$sports))?'selected':'';?>>Natacion</option>
+					<option value="futbol" <?= (isset($sports)&&in_array('futbol',$sports))?'selected':'';?> >Futbol</option>
+					<option value="beisbol" <?= (isset($sports)&&in_array('beisbol',$sports))?'selected':'';?>>Besisbol</option>
+					<option value="natacion" <?= (isset($sports)&&in_array('natacion',$sports))?'selected':'';?>>Natacion</option>
 					</select></li>
 		<li>Submit: <input type="submit" name="submit" value="Enviar"/></li>
 		<li>Button: <input type="button" name="button" value="Boton"/></li>

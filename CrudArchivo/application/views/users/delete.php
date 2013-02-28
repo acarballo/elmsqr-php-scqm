@@ -11,7 +11,7 @@
 
 <div id="wrapper">
 
-<form action="procesar_delete.php" method="POST">
+<form method="POST">
 	<ul>
 		<li>Id: <input type="hidden" name="id" value="<?= (isset($_GET['id']))?$_GET['id']:'1';?>"/></li>
 		<li>Submit: <input type="submit" name="submit" value="Si"/></li>
