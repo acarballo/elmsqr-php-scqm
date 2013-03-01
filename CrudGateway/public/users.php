@@ -46,7 +46,7 @@ switch ($action)
 	case 'update':
 		if($_POST)
 		{
-			updateUser($_GET['id'], $config);			
+			updateUser($_GET['id'], $config, $_POST);			
 			header('Location: /users.php');
 			exit;
 		}
