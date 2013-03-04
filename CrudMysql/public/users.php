@@ -13,9 +13,12 @@ else
 
 // Read config
 $config=parse_ini_file('../application/configs/config.ini',true);
+$config=$config['production'];
+// $config = ReadConfig ('../application/configs/config.ini', 'development');
+
 
 // Include Gateways
-include_once('../application/models/dataGatewayFiles.php');
+include_once('../application/models/dataGatewayMysql.php');
 
 // Include Models
 include_once('../application/models/files/functions.php');
