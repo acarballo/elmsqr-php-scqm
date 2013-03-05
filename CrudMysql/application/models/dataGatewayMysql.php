@@ -54,7 +54,32 @@ function disconnectDB($cnx)
  */
 function readUser($id, $config)
 {
-
+	// Conectar al servidor y la DB
+	$cnx = mysqli_connect($config['db.server'],$config['db.user'],
+			$config['db.password'],$config['db.database']);
+	// Leer el usuario id
+	$query="SELECT * FROM users WHERE iduser=".$id;
+	$result=mysqli_query($cnx,$query);
+	while ($row = mysqli_fetch_assoc($result)) 
+	{
+		$user [] = $row;
+	}
+	
+	// FIXME: --5.03.13--acl--Normalizar la base de datos
+	$user[0]['pets']=explode(',',$user[0]['pets']);
+	
+	
+	
+	$query="SELECT * FROM users_has_sports WHERE users_iduser=".$id;
+	
+	echo $query;
+	$result=mysqli_query($cnx,$query);
+	$user[0]['sports']=mysqli_fetch_assoc($result);
+	
+	return $user[0];
+	
+	
+	// Retornar un array 	
 }
 
 /**
@@ -69,14 +94,22 @@ function deleteUser($id,$config)
 }
 
 /**
- * Update id user 
+ * Update id user into mysql 
  * @param int $id
  * @param array $config
  * @param array $data
  */
 function updateUser($id,$config, $data)
 {
-
+	// Conectar al servidor y a la DB
+	
+	// Actualizar usuario
+	
+	// Actualizar deportes del usuario
+	
+	
+	
+	
 }
 
 /**
@@ -131,6 +164,24 @@ function insertUser($config, $data)
 	return $id;
 }
 
-
-
+/**
+ * Initialize user
+ * 
+ * @return array $user
+ */
+function initUser()
+{
+	$user=array(
+			'name'=>'',
+			'email'=>'',
+			'password'=>'',
+			'description'=>'',
+			'address'=>'',
+			'pets'=>array(),
+			'sports'=>array(),
+			'genders_idgender'=>'',
+			'cities_idcity'=>''
+	);
+	return $user;
+}
 

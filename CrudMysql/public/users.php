@@ -20,6 +20,9 @@ $config=$config['production'];
 // Include Gateways
 include_once('../application/models/dataGatewayMysql.php');
 
+// Include actionHelpers
+include_once('../application/controllers/helpers/actionHelpersFunctions.php');
+
 // Include viewHelpers
 include_once('../application/views/helpers/helpersFunctions.php');
 
@@ -38,7 +41,8 @@ switch ($action)
 			exit;
 		}
 		else
-		{
+		{	
+			$user=initUser();
 			include_once('../application/views/forms/user.php');
 		}
 	break;
@@ -53,6 +57,7 @@ switch ($action)
 		else 
 		{
 			$user=readUser($_GET['id'], $config, $_POST);
+			debug('users',$user);
 			include_once('../application/views/forms/user.php');
 		}
 	break;

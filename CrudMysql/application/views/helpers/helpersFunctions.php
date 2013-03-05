@@ -28,7 +28,8 @@ function createSelectFromDb($config, $table, $name,
 	while ($row = mysqli_fetch_assoc($result)) 
 	{	
 		$html.="<option value=\"".$row[$valueColumn]."\""; 
-				if (isset($data[$name])&&$data[$name]==".$row[$valueColumn].")
+				//if (isset($data[$name])&&$data[$name]==".$row[$valueColumn].")
+				if (in_array($row[$valueColumn],$data))
 					$html.='selected';
 				else 
 					$html.='';
@@ -60,7 +61,7 @@ function createRadioCheckFromDb($config, $table, $name,
 	{	
 		$html.=$row[$labelColumn] .": "."<input type=\"".$fieldType."\" 
 					name=\"".$name."\" value=\"".$row[$valueColumn]."\""; 
-				if (isset($data[$name])&&$data[$name]=='".$row[$valueColumn]."')
+				if (in_array($row[$valueColumn],$data))
 					$html.='checked';
 				else
 					$html.=''; 

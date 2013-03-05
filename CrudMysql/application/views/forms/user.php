@@ -13,17 +13,18 @@
 
 <form method="POST" enctype="multipart/form-data">	
 	<ul>
-		<li>Id: <input type="hidden" name="id" value="<?= (isset($_GET['id']))?$_GET['id']:'1';?>"/></li>
-		<li>Name: <input type="text" name="name" value="<?= (isset($user[1])&&$user[1]!='')?$user[1]:'';?>" /></li>
-		<li>Email: <input type="text" name="email" value="<?= (isset($user[2])&&$user[2]!='')?$user[2]:'';?>" /></li>
+		<li>Id: <input type="hidden" name="id" value="<?= (isset($user['iduser']))?$user['iduser']:'';?>"/></li>
+		<li>Name: <input type="text" name="name" value="<?= (isset($user['name'])&&$user['name']!='')?$user['name']:'';?>" /></li>
+		<li>Email: <input type="text" name="email" value="<?= (isset($user['email'])&&$user['email']!='')?$user['email']:'';?>" /></li>
 		<li>Password: <input type="password" name="password"/></li>
-		<li>Dirección: <input type="text" name="address" value="<?= (isset($user[4])&&$user[4]!='')?$user[4]:'';?>"/></li>
-		<li>Descripción: <textarea rows="10" cols="10" name="description"><?= (isset($user[5])&&$user[5]!='')?$user[5]:'';?></textarea></li>
+		<li>Dirección: <input type="text" name="address" value="<?= (isset($user['address'])&&$user['address']!='')?$user['address']:'';?>"/></li>
+		<li>Descripción: <textarea rows="10" cols="10" name="description"><?= (isset($user['description'])&&$user['description']!='')?$user['description']:'';?></textarea></li>
 		<li>
-			Sexo: <?=createRadioCheckFromDb($config, 'genders', 'sex','idgender', 'gender', '', FALSE);?>
+			Sexo: <?=createRadioCheckFromDb($config, 'genders', 'sex','idgender', 
+										'gender', array($user['genders_idgender']), FALSE);?>
 		</li>
 		<li>
-			Ciudad: <?=createSelectFromDb($config, 'cities', 'city','idcity', 'city', '', FALSE);?>
+			Ciudad: <?=createSelectFromDb($config, 'cities', 'city','idcity', 'city', array($user['cities_idcity']), FALSE);?>
 		</li>
 		<li>Foto: <input type="file" name="photo"/>
 		<?php if(isset($user[11])): ?>
@@ -31,10 +32,10 @@
 		<?php endif; ?>
 		</li>
 		<li>
-			<?=createRadioCheckFromDb($config, 'pets', 'pets', 'idpet', 'pet', '', TRUE);?>
+			<?=createRadioCheckFromDb($config, 'pets', 'pets', 'idpet', 'pet', $user['pets'], TRUE);?>
 		</li>
 		<li>Deportes: 
-			<?=createSelectFromDb($config, 'sports', 'sports', 'idsport', 'sport', '', TRUE);?>
+			<?=createSelectFromDb($config, 'sports', 'sports', 'idsport', 'sport', $user['sports'], TRUE);?>
 		</li>
 		<li>Submit: <input type="submit" name="submit" value="Enviar"/></li>
 		<li>Button: <input type="button" name="button" value="Boton"/></li>
