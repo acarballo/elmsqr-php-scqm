@@ -20,6 +20,9 @@ $config=$config['production'];
 // Include Gateways
 include_once('../application/models/dataGatewayMysql.php');
 
+// Include viewHelpers
+include_once('../application/views/helpers/helpersFunctions.php');
+
 // Include Models
 include_once('../application/models/files/functions.php');
 include_once('../application/models/files/filesFunctions.php');

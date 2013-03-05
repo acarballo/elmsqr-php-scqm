@@ -12,8 +12,8 @@ function readUsers($config)
 {
 	$cnx=connectDB($config);
 	$query = "SELECT * FROM users";
-	$result=mysql_query($query,$cnx);
-	while ($row = mysql_fetch_assoc($result)) 
+	$result=mysqli_query($cnx,$query);
+	while ($row = mysqli_fetch_assoc($result)) 
 	{
 		$users [] = $row;
 	}
@@ -28,9 +28,10 @@ function readUsers($config)
 function connectDB($config)
 {
 	// Conectar al servidor de DB
-	$cnx = mysql_connect($config['db.server'],$config['db.user'],$config['db.password']);
+	$cnx = mysqli_connect($config['db.server'],$config['db.user'],
+						  $config['db.password'],$config['db.database']);
 	// Conectar a la BD
-	mysql_select_db($config['db.database']);
+	//mysqli_select_db($config['db.database']);
 	
 	return $cnx;
 }
@@ -41,7 +42,7 @@ function connectDB($config)
  */
 function disconnectDB($cnx)
 {
-	mysql_close($cnx);
+	mysqli_close($cnx);
 	return;
 }
 
@@ -86,7 +87,48 @@ function updateUser($id,$config, $data)
  */
 function insertUser($config, $data)
 {
+	// Conectar al servidor y a la DB	
+	$cnx = mysqli_connect($config['db.server'],$config['db.user'],
+						  $config['db.password'],$config['db.database']);
+	
+	
+	$data['photo']=insertPhoto($config['uploadDirectory']);
+	
+	echo "<pre>data:";
+	print_r($data);
+	echo "<pre>";
+	
+	// Insertar el usuario
+	$query="INSERT INTO users SET 
+				name = '".$data['name']."',
+				email = '".$data['email']."', 
+				password = '".$data['password']."',
+				address = '".$data['address']."',
+				description = '".$data['description']."',
+				pets = '".implode(',',$data['pets'])."',
+				photo = '".$data['photo']."',
+				genders_idgender = ".$data['sex'].", 
+				cities_idcity = ".$data['city']."
+			";
+	
+	mysqli_query($cnx, $query);
+	$id=mysqli_insert_id($cnx);
+	
 
+	// Insertar los deportes del usuario
+	foreach ($data['sports'] as $key => $value)
+	{	
+		$query2="INSERT INTO users_has_sports SET
+					users_iduser =".$id.",
+					sports_idsport =".$value."
+				";
+		
+		mysqli_query($cnx, $query2);
+	}
+		
+	// Retornar el id de usuario
+	
+	return $id;
 }
 
 
