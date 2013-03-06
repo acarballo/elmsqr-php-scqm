@@ -1,16 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>Confirmar Borrar</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta name="robots" content="noarchive,noindex">
-<meta name="description" content="Formulario">
-<meta name="keywords" content="Formulario">
-</head>
-<body>
-
-<div id="wrapper">
-
 <form method="POST">
 	<ul>
 		<li>Seguro que quieres borrar a:<?=$user['name'];?></li>
@@ -20,12 +7,3 @@
 		
 	</ul>
 </form>
-
-
-
-</div>
-
-<div class="bottom">
-</div>
-</body>
-</html>
