@@ -31,6 +31,8 @@ include_once('../application/models/files/functions.php');
 include_once('../application/models/files/filesFunctions.php');
 include_once('../application/models/users/usersFunctions.php');
 
+
+
 switch ($action)
 {
 	case 'insert':
@@ -77,12 +79,27 @@ switch ($action)
 	break;
 		
 	case 'select':
-		$users=readUsers($config);
-		include_once ('../application/views/users/select.php');
+		ob_start();
+			$users=readUsers($config);
+			include_once ('../application/views/users/select.php');
+		$content=ob_get_clean();
+		ob_end_flush();
 	break;	
 	
 	default:
 		echo "Esto default";
 	break;	
 }
+
+
+
+
+// Include Layout
+include_once('../application/layouts/layout.php');
+
+
+
+
+
+
 
