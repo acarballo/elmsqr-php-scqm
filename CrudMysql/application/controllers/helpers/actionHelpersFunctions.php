@@ -1,7 +1,7 @@
 <?php
 
 
-function debug($label, $data)
+function debug($data, $label='')
 {
 	//echo "<pre>".__FILE__.$label.": ";
 	echo "<pre>".$label.": ";

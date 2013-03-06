@@ -46,4 +46,16 @@ function insertPhoto($uploadDir)
 	return $name;
 }
 
+/**
+ * Delete photo from directory
+ * @param string $uploadDir
+ * @param string $filename
+ */
+function deletePhoto($uploadDir, $filename)
+{
+	$ruta = $_SERVER['DOCUMENT_ROOT'].$uploadDir;
+	unlink($ruta."/".$filename);
+	return;
+}
+
 

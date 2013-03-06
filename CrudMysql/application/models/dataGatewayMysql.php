@@ -10,13 +10,23 @@
  */
 function readUsers($config)
 {
-	$cnx=connectDB($config);
+	$cnx = connectDB($config);
 	$query = "SELECT * FROM users";
-	$result=mysqli_query($cnx,$query);
+	$result = mysqli_query($cnx,$query);
 	while ($row = mysqli_fetch_assoc($result)) 
 	{
+		
+		$query2 = "SELECT * FROM users_has_sports WHERE users_iduser=".$row['iduser'];
+		$result2 = mysqli_query($cnx,$query2);
+		
+		$sports=array();
+		while ($sport = mysqli_fetch_assoc($result2))
+			$sports[]=$sport['sports_idsport'];
+				
+		$row['sports']=implode(',',$sports);
 		$users [] = $row;
 	}
+	
 	return $users;
 }
 
@@ -68,14 +78,13 @@ function readUser($id, $config)
 	// FIXME: --5.03.13--acl--Normalizar la base de datos
 	$user[0]['pets']=explode(',',$user[0]['pets']);
 	
-	
-	
 	$query="SELECT * FROM users_has_sports WHERE users_iduser=".$id;
-	
-	echo $query;
 	$result=mysqli_query($cnx,$query);
-	$user[0]['sports']=mysqli_fetch_assoc($result);
+	while($sport=mysqli_fetch_assoc($result))
+		$sports[]=$sport['sports_idsport'];
 	
+	
+	$user[0]['sports']=$sports;
 	return $user[0];
 	
 	
@@ -90,7 +99,24 @@ function readUser($id, $config)
  */
 function deleteUser($id,$config)
 {
-
+	// Conectar al servidor y a la DB
+	$link = mysqli_connect($config['db.server'],$config['db.user'],
+			$config['db.password'],$config['db.database']);
+	
+	// Borrar foto
+	$user=readUser($id,$config);
+	$name=deletePhoto($config['uploadDirectory'], $user['photo']);
+	
+	// Borrar deportes del usuario
+	$query="DELETE FROM users_has_sports WHERE users_iduser=".$id;
+	mysqli_query($link, $query);
+	
+	// Borrar usuario
+	$query="DELETE FROM users WHERE iduser=".$id;
+	mysqli_query($link, $query);
+	
+	return;
+	
 }
 
 /**
@@ -102,14 +128,45 @@ function deleteUser($id,$config)
 function updateUser($id,$config, $data)
 {
 	// Conectar al servidor y a la DB
+	$link = mysqli_connect($config['db.server'],$config['db.user'],
+			$config['db.password'],$config['db.database']);
+	
+	// Actualizar foto
+	$user=readUser($id,$config);
+	$name=updatePhoto($user['photo'], $config['uploadDirectory']);
+	$data['photo']=$name;
 	
 	// Actualizar usuario
+	$query="UPDATE users SET
+					name='".$data['name']."',
+					email='".$data['email']."',
+					password='".$data['password']."',
+					description='".$data['description']."',
+					address='".$data['address']."',
+					genders_idgender='".$data['sex']."',
+					cities_idcity='".$data['city']."',
+					pets='".implode(',',$data['pets'])."',
+					photo='".$data['photo']."'
+			WHERE iduser=".$id;
+	
+	mysqli_query($link, $query);
 	
 	// Actualizar deportes del usuario
+	$query="DELETE FROM users_has_sports WHERE users_iduser=".$id;
+	mysqli_query($link, $query);
 	
+	// Insertar los deportes del usuario
+	foreach ($data['sports'] as $key => $value)
+	{	
+		$query2="INSERT INTO users_has_sports SET
+					users_iduser =".$id.",
+					sports_idsport =".$value."
+				";
+		
+		mysqli_query($link, $query2);
+	}
 	
-	
-	
+	return;
 }
 
 /**
@@ -126,10 +183,6 @@ function insertUser($config, $data)
 	
 	
 	$data['photo']=insertPhoto($config['uploadDirectory']);
-	
-	echo "<pre>data:";
-	print_r($data);
-	echo "<pre>";
 	
 	// Insertar el usuario
 	$query="INSERT INTO users SET 
