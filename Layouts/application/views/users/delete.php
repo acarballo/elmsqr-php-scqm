@@ -1,3 +1,7 @@
+<?php 
+$user=$viewVars['user'];
+$title=$viewVars['title'];
+?>
 <form method="POST">
 	<ul>
 		<li>Seguro que quieres borrar a:<?=$user['name'];?></li>

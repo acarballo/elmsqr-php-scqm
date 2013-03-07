@@ -3,7 +3,7 @@ $users=$viewVars['users'];
 $title=$viewVars['title'];
 ?>
 <h1><?=$title;?></h1>
-<a href="users.php?action=insert">Add</a>
+<a href="/users/insert">Add</a>
 <table border=1>
 	<tr>
 		<th>id</th>
@@ -25,9 +25,9 @@ $title=$viewVars['title'];
 			<td><?=(is_array($value))?implode(',',$value):$value;?></td>
 		<?php endforeach;?>
 		<td>
-			<a href="users.php?action=update&id=<?=$line['iduser'];?>">update</a>
+			<a href="/users/update/id/<?=$line['iduser'];?>">update</a>
 				&nbsp;
-			<a href="users.php?action=delete&id=<?=$line['iduser'];?>">delete</a>
+			<a href="/users/delete/id/<?=$line['iduser'];?>">delete</a>
 		</td>		
 	</tr>
 <?php endforeach; ?>

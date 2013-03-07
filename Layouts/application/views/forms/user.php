@@ -1,3 +1,7 @@
+<?php 
+$user=$viewVars['user'];
+$title=$viewVars['title'];
+?>
 <form method="POST" enctype="multipart/form-data">	
 	<ul>
 		<li>Id: <input type="hidden" name="id" value="<?= (isset($user['iduser']))?$user['iduser']:'';?>"/></li>
