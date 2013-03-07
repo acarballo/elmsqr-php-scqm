@@ -3,11 +3,15 @@
 
 function router($config)
 {
-	$controllerActions=array('users'=>array('insert','update','delete','select'));
+	$controllerActions=array(
+						'index'=>array('index'),
+						'author'=>array('login','logout'),
+						'users'=>array('insert','update','delete','select')
+					);
 	$parse=explode('/',$_SERVER['REQUEST_URI']);
 	
 	$route['controller']=$parse[1];
-	$route['action']=$parse[2];
+	@$route['action']=$parse[2];
 	
 	if(file_exists($config['path.controllers']."/".$route['controller'].".php"))
 		if(in_array($route['action'],$controllerActions[$route['controller']]))
@@ -24,8 +28,11 @@ function router($config)
 		}
 	else
 	{
-		$route['controller']='error';
-		$route['action']=NO_CONTROLLER;
+// 		$route['controller']='error';
+// 		$route['action']=NO_CONTROLLER;
+		
+		$route['controller']='index';
+		$route['action']='index';
 	}
 	
 // 	debug($route);

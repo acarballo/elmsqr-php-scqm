@@ -11,8 +11,6 @@ define ('NO_ACTION', 'no_action');
 define ('NO_CONTROLLER', 'no_controller');
 
 
-
-
 // Include Gateways
 include_once('../application/models/dataGatewayMysql.php');
 
@@ -28,32 +26,24 @@ include_once('../application/views/helpers/helpersFunctions.php');
 include_once('../application/models/files/functions.php');
 include_once('../application/models/files/filesFunctions.php');
 
-// 
+// Include FrontFunctions
 include_once('../application/frontFunctions.php');
 
-
-if(isset($_GET['controller']))
-	$controller=$_GET['controller'];
-else
-	$controller = 'index';
-
-
-
-if(isset($_GET['action']))
-	$action=$_GET['action'];
-else
-	$action = 'index';
-
-
-
 $route=router($config);
+
+session_start();
+debug($_SESSION);
 
 
 switch ($route['controller'])
 {
 	
 	case 'users':
-		include ("../application/controllers/users.php");
+		include ($config['path.controllers']."/users.php");
+	break;
+	
+	case 'author':
+		include ($config['path.controllers']."/author.php");
 	break;
 	
 	case 'error':
@@ -62,19 +52,10 @@ switch ($route['controller'])
 	break;
 
 	case 'index':
-		debug($route);
+		include ($config['path.controllers']."/index.php");
 		echo "INDEX";
 	break;	
-		
 	
 }
-
-
-
-
-
-
-
-
 
 

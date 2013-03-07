@@ -6,6 +6,15 @@
  * 
  */
 
+// Controll de session
+
+
+
+//$_SESSION['var']="value";
+
+
+
+
 // Include model
 include_once('../application/models/users/usersFunctions.php');
 

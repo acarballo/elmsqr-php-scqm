@@ -2,7 +2,11 @@
 $users=$viewVars['users'];
 $title=$viewVars['title'];
 ?>
+<a href="/index/index">Home</a>
+Usuario: <?=$_SESSION['iduser'];?>
+<a href="/author/logout">Logout</a>
 <h1><?=$title;?></h1>
+
 <a href="/users/insert">Add</a>
 <table border=1>
 	<tr>
