@@ -135,8 +135,8 @@ class Bootstrap
 			}
 		
 		}
-		$route['controller']='author';
-		$route['action']='login';
+		$route['controller']='users';
+		$route['action']='select';
 		
 		
 		$this->route=$route;

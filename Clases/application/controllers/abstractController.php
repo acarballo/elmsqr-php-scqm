@@ -1,64 +1,18 @@
 <?php
-abstract class abstractController implements toOut
+abstract class controllers_abstractController implements toDebug
 {
-	abstract function myAbstractFunction();
-
-	
-	function toArray()
+	abstract public function indexAction();
+	abstract public function errorAction();
+	public function debugAction()
 	{
 		
 	}
-	
-	function toString()
-	{
-	
-	}	
-	
-	final function toJson()
-	{
-	
-	}
-	
-	function myFunction()
-	{
-		echo "asd";
-	}
-	
-	
+		
 }
 
-class controllers_abstractController extends abstractController 
+interface toDebug
 {
-	function __construct()
-	{
-		
-		$this->myFunction();
-	}
-	
-	function myAbstractFunction()
-	{
-		
-	}
-	
-	function toArray()
-	{
-		
-	}
-	
-	
-	
-	
-}
-
-
-
-
-
-interface toOut
-{
-	public function toArrays();
-	public function toString();
-	public function toJson();	
+	public function debugAction();	
 }
 
 

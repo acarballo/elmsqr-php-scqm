@@ -8,7 +8,13 @@ class controllers_frontController
 	{
 		$route = $route -> getRoute();
 		$this->config = $_SESSION['register']['config'];	
-		include ($this->config['path.controllers']."/".$route['controller'].".php");
+				
+		$string ="controllers_".$route['controller']."Controller";
+		$string2 = $route['action']."Action";
+		
+		$controller = new $string;
+		$controller->$string2(); 	
+		
 	}
 	
 	
