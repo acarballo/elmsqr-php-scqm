@@ -42,8 +42,8 @@ class Bootstrap
 	{
 		// Read config
 		$config=parse_ini_file($this->config,true);
-		$config=$config['production'];
-		// $config = ReadConfig ('../application/configs/config.ini', 'development');
+		$config=$config[$this->env];
+		// $config = ReadConfig ('../application/configs/config.ini', $this->env);
 		$_SESSION['register']['config']=$config;		
 	}	
 	
@@ -82,11 +82,6 @@ class Bootstrap
 			$route['controller']='index';
 			$route['action']='index';
 		}
-		
-		// 	debug($route);
-		// 	debug($_REQUEST);
-		
-		// 	die;
 		
 		$this->route=$route;
 	}
@@ -141,27 +136,7 @@ class Bootstrap
 		
 		$this->route=$route;
 		return $this->route;
-	}
-	
-	
-	
-	// Include Gateways
-// 	include_once('../application/models/dataGatewayMysql.php');
-	
-// 	// Include actionHelpers
-// 	include_once('../application/controllers/helpers/actionHelpersFunctions.php');
-// 	include_once('../application/controllers/helpers/viewFunctions.php');
-	
-	
-// 	// Include viewHelpers
-// 	include_once('../application/views/helpers/helpersFunctions.php');
-	
-// 	// Include Models
-// 	include_once('../application/models/files/functions.php');
-// 	include_once('../application/models/files/filesFunctions.php');
-	
-// 	// Include FrontFunctions
-// 	include_once('../application/frontFunctions.php');
+	}		
 
 	/**
 	 * @return the $route
