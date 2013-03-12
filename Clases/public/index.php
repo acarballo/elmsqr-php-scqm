@@ -13,20 +13,7 @@ define ('NO_CONTROLLER', 'no_controller');
 
 $config="../application/configs/config.ini";		
 
-
-
-// $abs = new controllers_usersController();
-
-
-
-
 $application = new Application ($config, APPLICATION_ENV);
 $application->Bootstrap()
 			->frontController();
-
-
-
-
-//$bootstrap = new Bootstrap;
-//$instance = new controllers_frontController($bootstrap);
 

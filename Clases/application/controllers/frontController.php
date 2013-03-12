@@ -3,6 +3,7 @@
 class controllers_frontController
 {
 	protected $config;
+	private $layout;
 	
 	public function __construct($route)
 	{
@@ -13,9 +14,19 @@ class controllers_frontController
 		$string2 = $route['action']."Action";
 		
 		$controller = new $string;
-		$controller->$string2(); 	
+		$this->content = $controller->$string2(); 
 		
+		$layoutVars=array('content'=>$this->content,
+				'title'=>'Mi application');
+		$this->layout = controllers_helpers_actionHelpers::renderLayout("layout.php", $layoutVars);		
 	}
+	
+	public function __destruct()
+	{
+		echo $this->layout;
+	} 
+	
+	
 	
 	
 }
