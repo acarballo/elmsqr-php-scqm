@@ -17,7 +17,12 @@ class controllers_usersController extends controllers_abstractController
 	public function selectAction()
 	{
 		$model = new models_users_users($_SESSION['register']['config']);
-		$users = $model->readUsersFromWS();
+		$users = $model->readUsers();
+		
+		$model = new models_ws_ws($_SESSION['register']['config']);
+		$users = $model->readUsers();
+		
+		
 		echo "<pre>Users: ";
 		print_r($users);
 		echo "</pre>";

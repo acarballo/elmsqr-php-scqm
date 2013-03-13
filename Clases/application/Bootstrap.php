@@ -53,6 +53,7 @@ class Bootstrap
 			
 		$controllerActions=array(
 				'index'=>array('index'),
+				'ws'=>array('index','client'),
 				'author'=>array('login','logout'),
 				'users'=>array('insert','update','delete','select')
 		);
@@ -114,6 +115,8 @@ class Bootstrap
 				'4'=>array('index'.'.'.'index',
 						'author'.'.'.'login',
 						'users'.'.'.'select',
+						'ws'.'.'.'index',
+						'ws'.'.'.'client',
 						'author'.'.'.'logout')
 		);
 		

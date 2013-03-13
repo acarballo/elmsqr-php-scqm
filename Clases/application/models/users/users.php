@@ -55,12 +55,4 @@ class models_users_users
 		
 	}
 	
-	function readUsersFromWS()
-	{
-		$server='http://framework.zend.com/rest';
-		$client = new Zend_Rest_Client($server);		
-		$users = $client->readUsers()->get();
-		return $users; 
-	}
-	
 }
