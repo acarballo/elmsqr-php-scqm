@@ -6,13 +6,14 @@ class models_users_users
 	
 	public function __construct()
 	{
-		$this->link = models_dataGatewayMysql::newInstance()->link;
+		$this->link = models_dataGatewayMysql::newInstance()->link;			
 	}
 	
 	public function readUsers()
 	{		
 		$query = "SELECT * FROM users";
-		$result = mysqli_query($this->link,$query);
+		$result = mysqli_query($this->link,$query);		
+		
 		while ($row = mysqli_fetch_assoc($result))
 		{
 		
@@ -25,8 +26,7 @@ class models_users_users
 		
 			$row['sports']=implode(',',$sports);
 			$users [] = $row;
-		}
-		
+		}		
 		return $users;
 	}
 	
@@ -54,4 +54,13 @@ class models_users_users
 	{
 		
 	}
+	
+	function readUsersFromWS()
+	{
+		$server='http://framework.zend.com/rest';
+		$client = new Zend_Rest_Client($server);		
+		$users = $client->readUsers()->get();
+		return $users; 
+	}
+	
 }

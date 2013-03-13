@@ -3,7 +3,7 @@
 class models_dataGatewayMysql
 {
 	
-	private $instance;
+	private static $instance;
 	public $link;
 	
 	private function __construct()
@@ -16,18 +16,17 @@ class models_dataGatewayMysql
 							);
 		// Conectar a la BD
 		//mysqli_select_db($config['db.database']);
-		
-		return $link;
+		$this->link = $link;
 	}
 	
 	static public function newInstance()
 	{
-		if(isset($this->instance))
-			return $this->instance;
+		if(isset(self::$instance))
+			return self::$instance;
 		else
 		{
-			$this->instance = new models_dataGatewayMysql();
-			return $this->instance;
+			self::$instance = new models_dataGatewayMysql();
+			return self::$instance;
 		}
 			
 	}
